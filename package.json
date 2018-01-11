@@ -1,0 +1,27 @@
+{
+  "name": "flight_status",
+  "version": "1.0.0",
+  "description": "",
+  "main": "flight_status.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "elm": "elm make src/Main.elm --output scripts/flight-status.js || true",
+    "start": "livereload . -d",
+    "elm:watch": "chokidar '**/*.elm' -c 'npm run elm'",
+    "watch": "npm run start & npm run elm:watch & wait"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "elm": "^0.18.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cytracom/flights-elm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cytracom/flights-elm/issues"
+  },
+  "homepage": "https://github.com/Cytracom/flights-elm#readme"
+}
