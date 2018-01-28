@@ -12,9 +12,11 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
-  "dependencies": {
+  "devDependencies": {
     "elm": "^0.18.0"
+  },
+  "dependencies": {
+    "materialize-css": "^0.100.2"
   },
   "repository": {
     "type": "git",

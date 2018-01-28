@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.teal-red.min.css" />
     -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
     <link rel="stylesheet" href="/styles/main.css">
     <style >
       .mdl-data-table td, .mdl-data-table th {
@@ -18,8 +21,11 @@
 
   </head>
   <body>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script>
-      <!-- elm doesn't support sse natively, this is one possible solution -->
+        
+      // elm doesn't support sse natively, this is one possible solution 
       var app = Elm.Main.fullscreen();
       send_port_msg = function(msg) {
         data = msg.data;
