@@ -105,7 +105,7 @@ arrivalsView model =
     let
         arrivals =
             Dict.values model.flights
-                -- |> List.filter (\fdata -> fdata.recordType == "arrival" || fdata.recordType == "enroute")
+                 |> List.filter (\fdata -> fdata.recordType == "arrival" || fdata.recordType == "enroute")
                 |> List.map (\flight -> faline flight)
 
     in
@@ -120,23 +120,7 @@ arrivalsView model =
                     ]
                 ]
             , tbody []
---         comment out so I can test adding stuff to table arrivals
-                [ tr []
-                    [ td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    ]
-                    
-                ]
-                , tr []
-                    [ td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    , td [] [ text "some stuff" ]
-                    ]
+                arrivals
             ]
 
 view : Model -> Html Msg

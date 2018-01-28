@@ -4,10 +4,10 @@ import Dict exposing (Dict)
 import Json.Decode as Decode exposing (..)
 --import Json.Encode as Encode
 import Debug exposing (log)
---import Http
+import Http
 --import Material
 import Json.Decode.Pipeline exposing (decode, required, optional, hardcoded)
---import Time as Time
+import Time as Time
 --import Http
 import Models exposing (..)
 import Messages exposing (..)
@@ -16,7 +16,9 @@ import Ports exposing (..)
 
 apiUrl : String
 apiUrl =
-    "http://flight-status.dev:5053/v1.0/events/sse/fa-status"
+    "http://52.14.69.94:5053/v1.0/events/sse/fa-status/81586"
+request =
+      Http.get apiUrl faStatusDecoder
 
 faStatusDecoder : Decoder FlightData
 faStatusDecoder =
