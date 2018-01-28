@@ -115,12 +115,12 @@ view : Model -> Html Msg
 view model =
         div []
             [ div [class "topPageStyle", style topHeadingStyle]
-                [ img [src "../img/send_icon.png", style [ ("height", "50px"), ("width", "50px")]] [ ]
+                [ img [src "../assets/img/send_icon.png", style [ ("height", "50px"), ("width", "50px")]] [ ]
                 ,  h3 [ style [("display", "inline-block"), ("margin-top", "10px")]] [ (text "Flight Tracker") ]  
                 ,  h3 [ class "right", style h3Style] [( text "| DFW" )]
                 ]
 --                , arrivalsView model
-                div [ style [("border-color", "green")]]
+--                div [ style [("border-color", "green")]]
 --                [ div []
 --                    
 --                ]
