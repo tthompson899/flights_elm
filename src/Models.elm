@@ -1,6 +1,8 @@
 module Models exposing (..)
 
 import Dict exposing (Dict)
+import Time as Time
+import Date exposing (Date)
 
 
 type alias HttpResult =
@@ -17,7 +19,7 @@ type alias FlightData =
     , estimatedArrivalTime: Int
     , destination: String
     , arrivalTime: Int
-    , departureTime: Int
+    , departureTime: Int 
     , cancelled: Bool
     , arrivalDelay: Int
     , aircraft : String
@@ -30,3 +32,4 @@ type alias Model =
     , selected : Maybe String
     , filter : Maybe String
     }
+    

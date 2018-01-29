@@ -6,8 +6,8 @@ import Models exposing (..)
 import Messages exposing (..)
 --import Utility exposing (durationFormat, timeOfDay, getOrElse)
 import Dict exposing (Dict)
---import Date
---import Time exposing (Time)
+import Date
+import Time exposing (Time)
 --import Debug exposing (log)
 
 
@@ -93,9 +93,9 @@ msgBox qheading tooltip qnums =
 faline : FlightData -> Html Msg
 faline fadata =
     tr []
-    [ td [] [ text fadata.origin ]
-    , td [] [ text fadata.airline ]
-    , td [] [ text fadata.flightNumber ]
+    [ td [] [ text fadata.airline , text fadata.flightNumber ]
+    , td [] [ text fadata.origin ]
+    , td [] [ text (toString fadata.departureTime) ]
     , td [] [ text (toString fadata.estimatedArrivalTime) ]
     , td [] [ text fadata.status ]
     ]
@@ -105,22 +105,92 @@ arrivalsView model =
     let
         arrivals =
             Dict.values model.flights
-                 |> List.filter (\fdata -> fdata.recordType == "arrival" || fdata.recordType == "enroute")
+                 |> List.filter (\fdata -> fdata.recordType == "arrival" )
+--                 || fdata.recordType == "enroute")
+                |> List.map (\flight -> faline flight)
+            
+    in
+        table [ class "bordered" ]
+            [ thead []
+                [ tr []
+                    [ th [] [ text "Airline / Flight No" ]
+                    , th [] [ text "Depature City" ]
+                    , th [] [ text "Departure Time" ]
+                    , th [] [ text "Est Arrival Time" ]
+                    , th [] [ text "Status" ]
+                    ]
+                ]
+            , tbody []
+                arrivals
+            ]
+            
+enRouteView : Model -> Html Msg
+enRouteView model =
+    let
+        enRoute =
+            Dict.values model.flights
+                 |> List.filter (\fdata -> fdata.recordType == "enroute" )
                 |> List.map (\flight -> faline flight)
 
     in
         table [ class "bordered" ]
             [ thead []
                 [ tr []
-                    [ th [] [ text "Depature City" ]
-                    , th [] [ text "Airline" ]
-                    , th [] [ text "Flight No" ]
-                    , th [] [ text "Estimated" ]
+                    [ th [] [ text "Airline / Flight No" ]
+                    , th [] [ text "Depature City" ]
+                    , th [] [ text "Departure Time" ]
+                    , th [] [ text "Est Arrival Time" ]
                     , th [] [ text "Status" ]
                     ]
                 ]
             , tbody []
-                arrivals
+                enRoute
+            ]
+            
+scheduledDeparturesView : Model -> Html Msg
+scheduledDeparturesView model =
+    let
+        scheduledDepartures =
+            Dict.values model.flights
+                 |> List.filter (\fdata -> fdata.recordType == "Scheduled Departures" )
+                |> List.map (\flight -> faline flight)
+
+    in
+        table [ class "bordered" ]
+            [ thead []
+                [ tr []
+                    [ th [] [ text "Airline / Flight No" ]
+                    , th [] [ text "Depature City" ]
+                    , th [] [ text "Departure Time" ]
+                    , th [] [ text "Est Arrival Time" ]
+                    , th [] [ text "Status" ]
+                    ]
+                ]
+            , tbody []
+                scheduledDepartures
+            ]
+            
+departuresView : Model -> Html Msg
+departuresView model =
+    let
+        departures =
+            Dict.values model.flights
+                 |> List.filter (\fdata -> fdata.recordType == "Departures" )
+                |> List.map (\flight -> faline flight)
+
+    in
+        table [ class "bordered" ]
+            [ thead []
+                [ tr []
+                    [ th [] [ text "Airline / Flight No" ]
+                    , th [] [ text "Depature City" ]
+                    , th [] [ text "Departure Time" ]
+                    , th [] [ text "Est Arrival Time" ]
+                    , th [] [ text "Status" ]
+                    ]
+                ]
+            , tbody []
+                departures
             ]
 
 view : Model -> Html Msg
@@ -140,17 +210,17 @@ view model =
                         ]
                         , div [  class "tableDiv", style tableDivStyle]
                         [ h5 [ style h5TableStyle ] [ text "Scheduled Departures"]
-                        , arrivalsView model
+                        , scheduledDeparturesView model
                         ]
                     ]
                     , div [ class "row" ]
                     [ div [ class "tableDiv", style tableDivStyle ] 
                         [ h5 [ style h5TableStyle ] [ text "En Route"] 
-                         , arrivalsView model
+                         , enRouteView model
                         ]
                         , div [  class "tableDiv", style tableDivStyle]
                         [ h5 [ style h5TableStyle ] [ text "Departures"]
-                        , arrivalsView model
+                        , departuresView model
                         ]
                     ]
                ]
