@@ -2,7 +2,7 @@ module Messages exposing (..)
 
 import Time exposing (Time)
 --import Http exposing (..)
---import Models exposing (FlightData)
+import Models exposing (FlightData)
 
 
 type Msg

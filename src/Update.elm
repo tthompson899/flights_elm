@@ -37,6 +37,8 @@ faStatusDecoder =
         |> required "cancelled" bool
         |> required "arrival_delay" int
         |> required "aircraft" string
+        |> required "progress_percent" int
+        
 
 
 updateFlightStatus : Model -> String -> Model
@@ -59,5 +61,5 @@ update msg model =
             log ("Starting SSE REquest")
             ( model, ssePortRequest apiUrl )
         StatusEvent flightDataStr ->
-            (  (updateFlightStatus model flightDataStr), Cmd.none )
+            (  (updateFlightStatus model flightDataStr), Cmd.none ) 
 

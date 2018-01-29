@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..) --class, title, id, style
 import Models exposing (..)
 import Messages exposing (..)
---import Utility exposing (durationFormat, timeOfDay, getOrElse)
+import Utility exposing (durationFormat, timeOfDay, getOrElse, getOrElse)
 import Dict exposing (Dict)
 import Date
 import Time exposing (Time)
@@ -89,40 +89,49 @@ msgBox qheading tooltip qnums =
             [ text qnums ]
         ]
 
+fendline : FlightData -> Html Msg
+fendline fadata =
+    tr []
+    [ td [] [ text fadata.airline , text fadata.flightNumber ]
+    , td [] [ text fadata.origin ]
+    , td [] [ text (timeOfDay fadata.estimatedArrivalTime) ]
+    , td [] [ text (toString fadata.progress) , text "%" ]
+    ]
 
 faline : FlightData -> Html Msg
 faline fadata =
     tr []
     [ td [] [ text fadata.airline , text fadata.flightNumber ]
     , td [] [ text fadata.origin ]
-    , td [] [ text (toString fadata.departureTime) ]
-    , td [] [ text (toString fadata.estimatedArrivalTime) ]
+    , td [] [ text (timeOfDay fadata.estimatedArrivalTime) ]
+    , td [] [text fadata.status ]
+    ]
+
+
+fdline : FlightData -> Html Msg
+fdline fadata =
+    tr []
+    [ td [] [ text fadata.airline , text fadata.flightNumber ]
+    , td [] [ text fadata.origin ]
+    , td [] [ text (timeOfDay fadata.departureTime) ]
+    , td [] [ text (timeOfDay fadata.estimatedArrivalTime) ]
     , td [] [ text fadata.status ]
     ]
 
 arrivalsView : Model -> Html Msg
 arrivalsView model =
+   
     let
         arrivals =
             Dict.values model.flights
                  |> List.filter (\fdata -> fdata.recordType == "arrival" )
---                 || fdata.recordType == "enroute")
                 |> List.map (\flight -> faline flight)
             
     in
         table [ class "bordered" ]
-            [ thead []
-                [ tr []
-                    [ th [] [ text "Airline / Flight No" ]
-                    , th [] [ text "Depature City" ]
-                    , th [] [ text "Departure Time" ]
-                    , th [] [ text "Est Arrival Time" ]
-                    , th [] [ text "Status" ]
-                    ]
-                ]
-            , tbody []
-                arrivals
-            ]
+            [ tbody [] 
+                 arrivals
+            ]      
             
 enRouteView : Model -> Html Msg
 enRouteView model =
@@ -130,20 +139,11 @@ enRouteView model =
         enRoute =
             Dict.values model.flights
                  |> List.filter (\fdata -> fdata.recordType == "enroute" )
-                |> List.map (\flight -> faline flight)
+                |> List.map (\flight -> fendline flight)
 
     in
         table [ class "bordered" ]
-            [ thead []
-                [ tr []
-                    [ th [] [ text "Airline / Flight No" ]
-                    , th [] [ text "Depature City" ]
-                    , th [] [ text "Departure Time" ]
-                    , th [] [ text "Est Arrival Time" ]
-                    , th [] [ text "Status" ]
-                    ]
-                ]
-            , tbody []
+            [ tbody []
                 enRoute
             ]
             
@@ -152,21 +152,12 @@ scheduledDeparturesView model =
     let
         scheduledDepartures =
             Dict.values model.flights
-                 |> List.filter (\fdata -> fdata.recordType == "Scheduled Departures" )
+                 |> List.filter (\fdata -> fdata.recordType == "schedule" )
                 |> List.map (\flight -> faline flight)
 
     in
         table [ class "bordered" ]
-            [ thead []
-                [ tr []
-                    [ th [] [ text "Airline / Flight No" ]
-                    , th [] [ text "Depature City" ]
-                    , th [] [ text "Departure Time" ]
-                    , th [] [ text "Est Arrival Time" ]
-                    , th [] [ text "Status" ]
-                    ]
-                ]
-            , tbody []
+            [ tbody []
                 scheduledDepartures
             ]
             
@@ -175,21 +166,12 @@ departuresView model =
     let
         departures =
             Dict.values model.flights
-                 |> List.filter (\fdata -> fdata.recordType == "Departures" )
-                |> List.map (\flight -> faline flight)
+                 |> List.filter (\fdata -> fdata.recordType == "departure" )
+                |> List.map (\flight -> fendline flight)
 
     in
         table [ class "bordered" ]
-            [ thead []
-                [ tr []
-                    [ th [] [ text "Airline / Flight No" ]
-                    , th [] [ text "Depature City" ]
-                    , th [] [ text "Departure Time" ]
-                    , th [] [ text "Est Arrival Time" ]
-                    , th [] [ text "Status" ]
-                    ]
-                ]
-            , tbody []
+            [ tbody []
                 departures
             ]
 

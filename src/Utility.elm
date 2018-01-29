@@ -3,7 +3,9 @@ module Utility exposing (..)
 import Date
 import Time exposing (Time)
 import Dict exposing (Dict)
-
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Messages exposing (..)
 
 durationFormat : Int -> String
 durationFormat duration =
@@ -38,7 +40,7 @@ timeOfDay millis =
         dd =
             Date.fromTime (toFloat millis)
     in
-        [ Date.hour dd, Date.minute dd, Date.second dd ]
+        [ Date.hour dd, Date.minute dd ]
             |> List.map (\n -> n |> toString |> String.padLeft 2 '0')
             |> String.join ":"
 
@@ -51,3 +53,16 @@ getOrElse dict key default =
 
         Nothing ->
             default
+            
+--arrivalDepartStatus : Html Msg -> Html Msg
+--arrivalDepartStatus status =
+--        let 
+--            (color, message) =
+--            if status < 0  then 
+--                ("green", "On Time")
+----                p [ style [("color", "green")]] [text "On Time"]
+--            else
+--                ("red", "Delayed")
+----                p [ style [("color", "red")]] [text "Delayed!"]
+--        in
+--            div [ style [("color", color)] ] [ text message ]

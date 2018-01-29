@@ -23,6 +23,7 @@ type alias FlightData =
     , cancelled: Bool
     , arrivalDelay: Int
     , aircraft : String
+    , progress : Int
     }
 
 
